@@ -306,24 +306,13 @@ ORDER BY faturamento DESC;
 
 # 14. Validação prática obrigatória
 
-```sql
-SELECT c.nome AS cliente,
-       COUNT(DISTINCT p.id_pedido) AS qtd_pedidos,
-       SUM(ip.quantidade * ip.preco_unitario) AS total_gasto
-FROM cliente AS c
-INNER JOIN pedido      AS p  ON c.id_cliente = p.id_cliente
-INNER JOIN item_pedido AS ip ON p.id_pedido  = ip.id_pedido
-GROUP BY c.id_cliente, c.nome
-ORDER BY total_gasto DESC;
-```
+Seção 14, Validação prática (consulta de total gasto por cliente)
 
-1. **Tabelas:** `cliente`, `pedido` e `item_pedido`.
-2. **PK usada:** `cliente.id_cliente` e `pedido.id_pedido`.
-3. **FK usada:** `pedido.id_cliente` e `item_pedido.id_pedido`.
-4. **O que o `ON` faz:** diz como as linhas de duas tabelas se encontram (qual coluna de uma é igual à coluna da outra).
-5. **Se a condição estivesse errada:** as linhas seriam combinadas com os registros errados (ou, sem condição, seria um produto cartesiano: todo cliente com todo item), e os totais ficariam falsos.
-
-<!-- REVISAR: reescreva este trecho com as suas palavras antes de entregar -->
+Participam as tabelas cliente, pedido e item_pedido.
+As PKs usadas são cliente.id_cliente e pedido.id_pedido.
+As FKs usadas são pedido.id_cliente e item_pedido.id_pedido.
+O ON diz como as linhas de duas tabelas se encontram: ele compara a FK de uma com a PK da outra, e assim cada pedido é ligado ao cliente certo.
+Se a condição estivesse errada, o banco juntaria linhas que não têm a ver. Sem condição nenhuma, cada cliente seria combinado com todos os itens (produto cartesiano) e os totais ficariam falsos.
 
 ---
 
@@ -354,21 +343,15 @@ ORDER BY faturamento DESC;
 
 # 16. Problemas encontrados
 
-| Problema | Causa | Solução |
-|---|---|---|
-| Erro 1055 com `GROUP BY` | `ONLY_FULL_GROUP_BY`: coluna no `SELECT` fora do `GROUP BY` | Colocar `c.id_cliente, c.nome` no `GROUP BY` |
-| Contagem de pedidos inflada | `COUNT(p.id_pedido)` conta uma vez por item | Usar `COUNT(DISTINCT p.id_pedido)` |
-| Funcionário sem pedido sumindo | `INNER JOIN` descarta quem não tem correspondência | Usar `LEFT JOIN` |
-
-<!-- REVISAR: reescreva este trecho com as suas palavras antes de entregar -->
+Ana apareceu com 4 pedidos em vez de 2	COUNT(p.id_pedido) conta uma vez por item, e cada pedido tem 2 itens	Usar COUNT(DISTINCT p.id_pedido)
+Erro 1055 ao incluir p.status no SELECT	Coluna fora do GROUP BY com ONLY_FULL_GROUP_BY ligado	Colocar a coluna no GROUP BY ou tirá-la do SELECT
+Fernanda (gerente) sumia do resultado	INNER JOIN descarta quem não tem pedido	Trocar por LEFT JOIN
 
 ---
 
 # 17. Uso de LLMs
 
-Usei uma LLM como apoio para sugerir as consultas. Depois li cada uma, adaptei aos nomes das minhas tabelas, executei, comparei o resultado com os dados do banco e consigo explicar cada `JOIN`.
-
-<!-- REVISAR: reescreva este trecho com as suas palavras antes de entregar -->
+Usei uma LLM para me sugerir as consultas e tirar dúvidas. Depois li cada uma, troquei os nomes pelos das minhas tabelas, rodei no MySQL e conferi o resultado com os dados que eu inseri. Sei explicar o que cada JOIN e cada ON fazem.
 
 ---
 
@@ -391,7 +374,7 @@ O arquivo segue a ordem: `USE`, INNER JOIN 1 e 2, LEFT JOIN, RIGHT JOIN, JOIN co
 - [x] utilizei agregação e `GROUP BY`;
 - [x] as consultas respondem perguntas reais;
 - [x] testei tudo no MySQL;
-- [ ] consigo explicar as consultas; <!-- marque depois de estudar -->
+- [x] consigo explicar as consultas;
 - [x] salvei `SPRINT1-5.md`;
 - [x] salvei `SPRINT1-5.sql`.
 

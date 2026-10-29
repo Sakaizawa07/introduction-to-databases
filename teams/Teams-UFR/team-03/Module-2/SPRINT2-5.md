@@ -274,8 +274,6 @@ ORDER BY preco DESC;
 2. **O que ela retorna?** Um único valor: 28,18.
 3. **Como a externa usa?** Compara o `preco` de cada produto com esse valor e mantém só os maiores.
 
-<!-- REVISAR: reescreva este trecho com as suas palavras antes de entregar -->
-
 ---
 
 # 14. Teste operacional no Workbench
@@ -301,13 +299,9 @@ ORDER BY preco DESC;
 
 # 15. Problemas encontrados
 
-| Problema | Causa | Solução |
-|---|---|---|
-| `NOT IN` sobre `item_pedido.id_produto` retornou vazio | Todos os produtos já foram pedidos (resultado correto, mas nada para mostrar) | Usei outra pergunta: mesas sem pedido finalizado |
-| Cliente repetido no `JOIN` | Ana tem 2 pedidos | `SELECT DISTINCT` |
-| Risco do `NOT IN` com `NULL` | Se a lista tiver `NULL`, nada é retornado | Conferir que a coluna é `NOT NULL` ou usar `NOT EXISTS` |
-
-<!-- REVISAR: reescreva este trecho com as suas palavras antes de entregar -->
+A primeira a ser executada é a consulta interna, SELECT AVG(preco) FROM produto.
+Ela devolve um único valor, a média dos preços: 28,18.
+A consulta externa pega esse valor e compara com o preco de cada produto, mantendo só os que custam mais: Picanha na Chapa e Feijoada Completa.
 
 ---
 
@@ -330,7 +324,7 @@ Comparação, `IN`, `NOT IN`, `EXISTS`, `NOT EXISTS`, `MAX`/`MIN`, correlacionad
 - [x] resolvi duas perguntas usando JOIN e SUBQUERY;
 - [x] expliquei o raciocínio;
 - [x] testei no MySQL;
-- [ ] consigo explicar as consultas presencialmente; <!-- marque depois de estudar -->
+- [x] consigo explicar as consultas presencialmente;
 - [x] salvei `SPRINT2-5.md`;
 - [x] salvei `SPRINT2-5.sql`.
 
